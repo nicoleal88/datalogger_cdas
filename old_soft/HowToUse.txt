@@ -1,0 +1,29 @@
+Uso de datalogger:
+
+- Programa para Arduino: mc_line_voltage_08.ino
+- Programas en notebook/raspberry/beaglebone: tri_line_datalogger_unified_v1.py
+					      configFile.conf
+					      syncFiles.py
+- El usuario que ejecute el programa tri_line_datalogger_unified_v1.py debe pertenecer al grupo dialout:
+sudo usermod -a -G dialout youruser
+
+en configFile se encuentra el nombre del medidor, usuario e ip dende se hace la copia
+de los datos (en este caso test@172.21.3.90).
+
+Al ejecutar syncFiles.py se envian los datos al servidor configurado en configFile
+Los archivos se almacenan en la carpeta $HOME/nombreDelMedidor/Año/Mes/
+
+- En la PC test@172.21.3.90 se encuentra el graficador plot_vfi.py
+
+Uso de plot_vfi.py:
+Se debe tener instalado el paquete matplotlib de python
+sudo apt-get install python-matplotlib
+
+Argumento obligatorio: archivo de datos *.tsv
+Argumentos optativos: -e: grafica los eventos (sin -e solo se grafica las mediciones cada 60 segundos)
+                      -f HH:MM:SS : indica la hora desde la que se quiere graficar (por defecto las 0hs)
+                      -t HH:MM:SS : indica la hora hasta la que se quiere graficar (por defecto las 23:59hs)
+
+Para transformar microsegundos unix a fecha y hora usar:
+ms2date_terminal.py
+

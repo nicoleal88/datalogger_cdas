@@ -1,0 +1,25 @@
+Datalogger nuevo CDAS
+
+- 3 tensiones de entrada vR, vS, vT (neutro-tierra?)
+- 4 corrientes de entrada iR, iS, iT, iN
+- 1 frecuencia entrada
+
+- 1 tension salida UPS CDAS
+- 1 corriente salida UPS CDAS
+- frecuencia de salida
+
+- 1 tension salida UPS Offices
+- 1 corriente salida UPS Offices
+- frecuencia de salida
+
+- 1 tension baterias UPS CDAS (DC)
+- 1 corriente baterias UPS CDAS (DC)
+
+- 1 tension baterias UPS Offices (DC)
+- 1 corriente baterias UPS Offices (DC)
+
+Control de llaves motorizadas/SSR (En paralelo con control manual)
+- Entrada UPS CDAS
+- Entrada UPS Offices
+
+Medición de salida de disyuntores (5 entradas digitales)

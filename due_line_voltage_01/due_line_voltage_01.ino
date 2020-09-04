@@ -14,11 +14,15 @@ Datalogger for CDAS with Arduino DUE
 
 #include <DueTimer.h>
 
-
+/*
+ * Hay algo raro con esos preescalers en el Due
+ * 
 //const unsigned char PS_16 = (1 << ADPS2);
 //const unsigned char PS_32 = (1 << ADPS2) | (1 << ADPS0);
 //const unsigned char PS_64 = (1 << ADPS2) | (1 << ADPS1);
 //const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+
+*/
 
 int sensorPin_vR = A0;      // select the input pin for the IR LED signal
 int sensorPin_vS = A1;

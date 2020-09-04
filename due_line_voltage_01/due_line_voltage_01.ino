@@ -14,16 +14,6 @@ Datalogger for CDAS with Arduino DUE
 
 #include <DueTimer.h>
 
-/*
- * Hay algo raro con esos preescalers en el Due
- * 
-//const unsigned char PS_16 = (1 << ADPS2);
-//const unsigned char PS_32 = (1 << ADPS2) | (1 << ADPS0);
-//const unsigned char PS_64 = (1 << ADPS2) | (1 << ADPS1);
-//const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
-
-*/
-
 int sensorPin_vR = A0;      // select the input pin for the IR LED signal
 int sensorPin_vS = A1;
 int sensorPin_vT = A2;
@@ -74,19 +64,8 @@ int t = 20000 / 40;  //20000 = Period in us
 
 void setup() {
 
-  // set up the ADC
-//  ADCSRA &= ~PS_128;  // remove bits set by Arduino library
-
-  // you can choose a prescaler from above.
-  // PS_16, PS_32, PS_64 or PS_128
-//  ADCSRA |= PS_32;    // set our own prescaler to 64 
-
   // declare the ledPin as an OUTPUT:
   pinMode(ledPin, OUTPUT);
-//  Timer1.initialize(t);                      // Dispara cada t us
-//  Timer1.attachInterrupt(ISR_Blink);   // Activa la interrupcion y la asocia a ISR_Blink
-
-//  Timer3.attachInterrupt(timerIsr).setFrequency(50).start(); //outputs regulator controler at 50 Hz
 
   Timer3.attachInterrupt(ISR_Blink).start(t);
 
@@ -142,9 +121,22 @@ void loop() {
     digitalWrite(ledPin, Tflag);
     findPPo(arrayLength);  // Finds Peak to Peak and stores it in PPs pointer allocation
     deltaNScaled = findnZo(arrayLength);
-    packageGenO();
-    int bytes = Serial.write(arrayOfValues, sizeof(arrayOfValues));
-    Serial.println();
+//    packageGenO();
+//    int bytes = Serial.write(arrayOfValues, sizeof(arrayOfValues));
+    Serial.print(PPs[0]);
+    Serial.print("\t");
+    Serial.print(PPs[1]);
+    Serial.print("\t");
+    Serial.print(PPs[2]);
+    Serial.print("\t");
+    Serial.print(PPs[3]);
+    Serial.print("\t");
+    Serial.print(PPs[4]);
+    Serial.print("\t");
+    Serial.print(PPs[5]);
+    Serial.print("\t");
+    Serial.print(millis());
+    Serial.println("\t");
     Tflag = LOW;
   }
   digitalWrite(ledPin, Tflag);
@@ -203,51 +195,51 @@ deltaN: Tiempo entre dos cruces por cero, cada unidad equivale a 500us
    */
 }
 
-void packageGenO(){
-  arrayOfValues[0] = getOffset(PPs[0]);
-  arrayOfValues[1] = getOffset(PPs[1]);
-  arrayOfValues[2] = getOffset(PPs[2]);
-  arrayOfValues[3] = getOffset(PPs[3]);
-  arrayOfValues[4] = getOffset(PPs[4]);
-  arrayOfValues[5] = getOffset(PPs[5]);
-  arrayOfValues[6] = getOffset(PPs[5]);    // N current
-  arrayOfValues[7] = getOffset(deltaNScaled);
-  uint16_t indexCode = getIndexCode(PPs[0],PPs[1],PPs[2],PPs[3],PPs[4],PPs[5],PPs[5],deltaNScaled);
-  arrayOfValues[8] = (uint8_t)(indexCode);
-  arrayOfValues[9] = (uint8_t)(indexCode >> 8);
-  return;
-}
-
-uint8_t getOffset(int thisValue) {
-  uint8_t offsetCode = (uint8_t)(thisValue % 256);
-  if (offsetCode == 10){    // This loop will fix the error that rises when
-    offsetCode++;           // New Line character is sent.
-  }
-  return offsetCode;
-}
-
-uint16_t getIndex(int thisValue) {
-  uint16_t indexCode = (uint16_t)(thisValue / 256);
-  return indexCode;
-}
-
-uint16_t getIndexCode(int this_a, int this_b, int this_c, int this_d, int this_e, int this_f, int this_g, int this_h) {
-  uint16_t returnIndex = 0;
-  uint16_t tmp = 0;
-  returnIndex = getIndex(this_a);
-  tmp = getIndex(this_b) << 2;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_c) << 4;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_d) << 6;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_e) << 8;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_f) << 10;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_g) << 12;
-  returnIndex = returnIndex | tmp;
-  tmp = getIndex(this_h) << 14;
-  returnIndex = returnIndex | tmp;
-  return returnIndex;
-}
+//void packageGenO(){
+//  arrayOfValues[0] = getOffset(PPs[0]);
+//  arrayOfValues[1] = getOffset(PPs[1]);
+//  arrayOfValues[2] = getOffset(PPs[2]);
+//  arrayOfValues[3] = getOffset(PPs[3]);
+//  arrayOfValues[4] = getOffset(PPs[4]);
+//  arrayOfValues[5] = getOffset(PPs[5]);
+//  arrayOfValues[6] = getOffset(PPs[5]);    // N current
+//  arrayOfValues[7] = getOffset(deltaNScaled);
+//  uint16_t indexCode = getIndexCode(PPs[0],PPs[1],PPs[2],PPs[3],PPs[4],PPs[5],PPs[5],deltaNScaled);
+//  arrayOfValues[8] = (uint8_t)(indexCode);
+//  arrayOfValues[9] = (uint8_t)(indexCode >> 8);
+//  return;
+//}
+//
+//uint8_t getOffset(int thisValue) {
+//  uint8_t offsetCode = (uint8_t)(thisValue % 256);
+//  if (offsetCode == 10){    // This loop will fix the error that rises when
+//    offsetCode++;           // New Line character is sent.
+//  }
+//  return offsetCode;
+//}
+//
+//uint16_t getIndex(int thisValue) {
+//  uint16_t indexCode = (uint16_t)(thisValue / 256);
+//  return indexCode;
+//}
+//
+//uint16_t getIndexCode(int this_a, int this_b, int this_c, int this_d, int this_e, int this_f, int this_g, int this_h) {
+//  uint16_t returnIndex = 0;
+//  uint16_t tmp = 0;
+//  returnIndex = getIndex(this_a);
+//  tmp = getIndex(this_b) << 2;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_c) << 4;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_d) << 6;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_e) << 8;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_f) << 10;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_g) << 12;
+//  returnIndex = returnIndex | tmp;
+//  tmp = getIndex(this_h) << 14;
+//  returnIndex = returnIndex | tmp;
+//  return returnIndex;
+//}

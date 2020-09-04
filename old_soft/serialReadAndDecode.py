@@ -15,7 +15,8 @@ while True:
   try:
     #Data reading
     line = ser.readline()
-    if len(line) > 0:
+    print line
+    if len(line) > 10000: # Desabilitado el decode
       #print line
       
       vrOffset = ord(line[0])
@@ -55,4 +56,5 @@ while True:
     ser.close()
     break
   except IndexError:
-      print line
+    print "Error"
+    print line

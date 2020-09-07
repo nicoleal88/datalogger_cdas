@@ -190,8 +190,8 @@ while True:
         vRList.append(vR)
         vSList.append(vS)
         vTList.append(vT)
-	frList.append(fr)
-	iRList.append(iR)
+        frList.append(fr)
+        iRList.append(iR)
         iSList.append(iS)
         iTList.append(iT)
         iNList.append(iN)
@@ -216,22 +216,21 @@ while True:
 
       #Log writing and Screen printing (Periodic data every Delay seconds)
       if (int(msTime) >= (int(msTimeLast) + (args.delay * 1000)) and vR > vNoiseFilter and vS > vNoiseFilter and vT > vNoiseFilter):
-
         logInfo = "%.d \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.d \n"  % (int(msTime), vRList[-1], vSList[-1], vTList[-1], iRList[-1], iSList[-1], iTList[-1], iNList[-1], fr, event)
 
-	#Make year folder
-	try:
-	  yearFolder = dataPath + building + '/' + time.strftime("%Y")
-	  os.mkdir(yearFolder)
-	except:
-	  pass#print 'Error making year folder'
+        #Make year folder
+        try:
+          yearFolder = dataPath + building + '/' + time.strftime("%Y")
+          os.mkdir(yearFolder)
+        except:
+          pass#print 'Error making year folder'
 
-	#Make month folder
-	try:
-	  monthFolder = yearFolder + '/' + time.strftime("%m")
-	  os.mkdir(monthFolder)
-	except:
-	  pass#print 'Error making month folder'
+        #Make month folder
+        try:
+          monthFolder = yearFolder + '/' + time.strftime("%m")
+          os.mkdir(monthFolder)
+        except:
+          pass#print 'Error making month folder'
 
         logFilePath = monthFolder + '/' + time.strftime("%Y-%m-%d") + '-' + building.upper() + '.tsv'
 
@@ -268,7 +267,7 @@ while True:
       try:
         ser.port = getSerialPort()
         ser.open()
-	print ("Trying to open serial port")
+        print ("Trying to open serial port")
       except serial.serialutil.SerialException:
         print ('Buscando puerto' + config['PORT'])
         time.sleep(5)

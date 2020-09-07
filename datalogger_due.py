@@ -54,9 +54,9 @@ def getSerialPort():
     sttyCommand = "stty -F " + port + " 115200 -raw"
     subprocess.call(sttyCommand, shell=True)
   except serial.serialutil.SerialException:
-    print 'No se encuentra puerto'+ config['PORT']
+    print ('No se encuentra puerto'+ config['PORT'])
   except IndexError:
-    print 'No se encuentra puerto'+ config['PORT']
+    print ('No se encuentra puerto'+ config['PORT'])
   return port
 
 ser.port = getSerialPort()
@@ -240,7 +240,7 @@ while True:
         
         hour = time.strftime("%d/%m/%Y - %H:%M:%S")
 
-        print logInfo        
+        print (logInfo)
 
         msTimeLast = msTime
       else:
@@ -268,9 +268,9 @@ while True:
       try:
         ser.port = getSerialPort()
         ser.open()
-	print "Trying to open serial port"
+	print ("Trying to open serial port")
       except serial.serialutil.SerialException:
-        print 'Buscando puerto' + config['PORT']
+        print ('Buscando puerto' + config['PORT'])
         time.sleep(5)
       except IndexError:
         pass
@@ -280,7 +280,7 @@ while True:
   except ValueError:
     pass
   except serial.serialutil.SerialException:
-    print 'Serial Error!'
+    print ('Serial Error!')
     errorFlag = True
     errorInfo = "Serial Error - %s \n"  % (hour)
 
@@ -297,6 +297,6 @@ while True:
     except IndexError:
       pass
   except KeyboardInterrupt:
-    print '\n'
-    print "Exiting..." + '\n'
+    print ('\n')
+    print ("Exiting..." + '\n')
     break 

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
 #Use with mc_line_voltage_06.ino
 #Prints raw data and events in files, and periodic updates on screen (Every [delay] seconds)
@@ -75,7 +75,7 @@ fr = 0
 
 def getDataFromSerial(line):
   if len(line) > 0:
-    #print line
+    # print (line)
     vrOffset = ord(line[0])
     vsOffset = ord(line[1])
     vtOffset = ord(line[2])

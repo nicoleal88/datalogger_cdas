@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 
 import serial
 
@@ -15,8 +15,9 @@ while True:
   try:
     #Data reading
     line = ser.readline()
-    print line
-    if len(line) > 10000: # Desabilitado el decode
+    print (line)
+    print(len(line))
+    if len(line) > 1:
       #print line
       
       vrOffset = ord(line[0])
@@ -50,11 +51,12 @@ while True:
       It = itOffset + 256 * itIndex
       In = inOffset + 256 * inIndex
       
-      print "%s %s %s %s %s %s %s %s" % (Vr, Vs, Vt, F, Ir, Is, It, In)
-      
+      print ("%s %s %s %s %s %s %s %s" % (Vr, Vs, Vt, F, Ir, Is, It, In))
+      print ("No Error")
   except KeyboardInterrupt:
     ser.close()
     break
   except IndexError:
-    print "Error"
-    print line
+    print ("Index Error")
+  # except TypeError:
+  #   print ("Type Error")

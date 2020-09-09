@@ -1,6 +1,5 @@
 #!/usr/bin/python2
 
-#Use with mc_line_voltage_06.ino
 #Prints raw data and events in files, and periodic updates on screen (Every [delay] seconds)
 
 import argparse
@@ -141,6 +140,15 @@ def getDataFromSerial(line):
 def avgList(myList):
   return sum(myList) / float(len(myList))
 
+def trigger():
+  flag = False
+  items = [vRList, vSList, vTList] # Items to be checked
+
+  for i in items:
+    if abs(i[position] - i[position-1]) > vThreshold:
+      flag = True
+  
+  return flag
 
 #Variables
 nzLast = 0
@@ -169,11 +177,11 @@ vNoiseFilter = -1		#Voltage below this value is considered noise
 printFlag = False		#Allows saving events
 errorFlag = False		#Avoids events after serial error
 
-vPlotList = []			#Voltage buffer list for plotting
-fPlotList = []			#Frequency buffer list for plotting
-iPlotList = []			#Current buffer list for plotting
-plotListLength = 50		#Plot length
-i2 = 0
+# vPlotList = []			#Voltage buffer list for plotting
+# fPlotList = []			#Frequency buffer list for plotting
+# iPlotList = []			#Current buffer list for plotting
+# plotListLength = 50		#Plot length
+# i2 = 0
 
 while True:
   try:
@@ -247,7 +255,7 @@ while True:
        
       #Event writing (Prints data every 500us when an event occurs)
       #Event detection
-      if (abs(vRList[position]-vRList[position-1]) > vThreshold or abs(vSList[position]-vSList[position-1]) > vThreshold or abs(vTList[position]-vTList[position-1]) > vThreshold) and i1 == listLength and printN == 0:
+      if trigger() and i1 == listLength and printN == 0:
         printFlag = eval(config['SAVE_EVENTS'])        ##################  Habilitar para guardar eventos!!! #####################
         printN = listLength
         event += 1

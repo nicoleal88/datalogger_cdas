@@ -176,7 +176,7 @@ def avgList(myList):
 
 def trigger():
   flag = False
-  items = [A1List]	# Items to be checked
+  items = [A0List, A1List, A2List, A7List]	# Items to be checked
 
   for i in items:
     if abs(i[position] - i[position-1]) > vThreshold:

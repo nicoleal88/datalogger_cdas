@@ -357,6 +357,15 @@ while True:
         printN -= 1
       else:
         printFlag = False
+      
+      # Raw writing
+
+      rawInfo = "%.d \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \t %.2f \n"  % ((int(msTime) - dataDelay), A0List[0], A1List[0], A2List[0], A3List[0], A4List[0], A5List[0], A6List[0], frList[0], A7List[0], A8List[0], A9List[0], A10List[0], A11List[0])
+      
+      rawFilePath = dataPath + building + '/' + time.strftime("%Y-%m-%d") + '-' + building.upper() + '.tsv'
+      
+      with open(rawFilePath,'a') as f:
+          f.write(rawInfo)
 
     else:
       try:

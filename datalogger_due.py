@@ -11,8 +11,8 @@ import subprocess
 
 # Configure paths
 userHome = os.getenv("HOME")
-softPath = userHome + '/homeOffice/CDAS/datalogger_cdas/software/'
-dataPath = userHome + '/homeOffice/CDAS/datalogger_cdas/data/'
+softPath = userHome + '/datalogger_cdas/software/'
+dataPath = userHome + '/datalogger_cdas/data/'
 
 # Read configFile
 config = {}
